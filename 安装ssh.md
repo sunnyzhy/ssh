@@ -91,27 +91,44 @@ authorized_keys_spark2                        100%  416     0.4KB/s   00:00
 ```
 
 ## 切换到192.168.253.107
-~~~javascript
-[root@hadoop1 .ssh]# cd /root/.ssh
-[root@hadoop1 .ssh]# ls
-authorized_keys_hadoop1  authorized_keys_hadoop2  id_rsa  id_rsa.pub
-[root@hadoop1 .ssh]# cat authorized_keys_hadoop1 >> authorized_keys
-[root@hadoop1 .ssh]# ls
-authorized_keys          authorized_keys_hadoop2  id_rsa.pub
-authorized_keys_hadoop1  id_rsa
-[root@hadoop1 .ssh]# cat authorized_keys_hadoop2 >> authorized_keys
-[root@hadoop1 .ssh]# scp authorized_keys root@192.168.29.132:/root/.ssh
-[root@hadoop1 .ssh]# ls
-authorized_keys          authorized_keys_hadoop2  id_rsa.pub
-authorized_keys_hadoop1  id_rsa                   known_hosts
-~~~
+```
+# cd /root/.ssh
 
-##### 切换到192.168.29.132
-~~~javascript
-[root@hadoop2 .ssh]# cd /root/.ssh
-[root@hadoop2 .ssh]# ls
+# ls
+authorized_keys_spark1  authorized_keys_spark2  id_rsa  id_rsa.pub
+
+# cat authorized_keys_spark1 >> authorized_keys
+
+# ls
+authorized_keys         authorized_keys_spark2  id_rsa.pub
+authorized_keys_spark1  id_rsa
+
+# cat authorized_keys_spark2 >> authorized_keys
+
+# ls
+authorized_keys         authorized_keys_spark2  id_rsa.pub
+authorized_keys_spark1  id_rsa
+
+# scp authorized_keys root@192.168.253.108:/root/.ssh
+The authenticity of host '192.168.253.108 (192.168.253.108)' can't be established.
+ECDSA key fingerprint is 19:19:9a:b6:f5:28:9b:69:fd:90:5b:da:fa:ef:9b:b5.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.253.108' (ECDSA) to the list of known hosts.
+root@192.168.253.108's password: 
+authorized_keys                               100%  832     0.8KB/s   00:00 
+
+# ls
+authorized_keys         authorized_keys_spark2  id_rsa.pub
+authorized_keys_spark1  id_rsa                  known_hosts
+```
+
+## 切换到192.168.253.108
+```
+# cd /root/.ssh
+
+# ls
 authorized_keys  authorized_keys_hadoop2  id_rsa  id_rsa.pub  known_hosts
-~~~
+```
 
 ##### 在各个节点中设置authorized_keys读写权限
 ~~~javascript

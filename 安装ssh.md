@@ -82,6 +82,12 @@ id_rsa  id_rsa.pub
 authorized_keys_spark2  id_rsa  id_rsa.pub
 
 # scp authorized_keys_spark2 root@192.168.253.107:/root/.ssh
+The authenticity of host '192.168.253.107 (192.168.253.107)' can't be established.
+ECDSA key fingerprint is e2:94:c5:d5:40:69:ac:1b:88:04:5b:5e:61:37:ab:56.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.253.107' (ECDSA) to the list of known hosts.
+root@192.168.253.107's password: 
+authorized_keys_spark2                        100%  416     0.4KB/s   00:00   
 ```
 
 ## 切换到192.168.253.107

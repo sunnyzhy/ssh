@@ -18,35 +18,29 @@
 Enforcing
 
 # vim /etc/selinux/config
-#SELINUX=enforcing
-SELINUX=disabled  --把enforcing改为disabled
+SELINUX=disabled
 
 # reboot
 ```
 
-#### 修改SSH配置文件
-
-~~~javascript
+# 修改SSH配置文件
+```
 # vim /etc/ssh/sshd_config
-~~~
-
-开放以下三个配置：
-~~~
 RSAAuthentication yes
 PubkeyAuthentication yes
 AuthorizedKeysFile .ssh/authorized_keys
-~~~
 
-~~~javascript
-# service sshd restart
-~~~
+# systemctl restart sshd
+```
 
-#### 配置SSH无密码登录
-##### 用root账户登录192.168.29.131
-~~~javascript
-[root@hadoop1 /]# ssh-keygen -t rsa  --生成公钥，一路回车
-[root@hadoop1 /]# cd ~
-[root@hadoop1 ~]# ls -a --显示隐藏目录
+# 配置SSH无密码登录
+## 用root账户登录192.168.253.107
+```
+# ssh-keygen -t rsa  --生成公钥，一路回车
+
+# cd ~
+
+# ls -a --显示隐藏目录
 .                .config    .gnome2_private  install.log.syslog  .scala_history
 ..               .cshrc     .gnote           .local              .ssh
 .abrt            .dbus      .gnupg           .mozilla            .tcshrc
@@ -57,29 +51,40 @@ anaconda-ks.cfg  Desktop    .gstreamer-0.10  Music               Templates
 .bashrc          .gconf     .icons           Public              .viminfo
 .bashrc~         .gconfd    .imsettings.log  .pulse              .xinputrc
 .cache           .gnome2    install.log      .pulse-cookie
-[root@hadoop1 ~]# cd .ssh
-[root@hadoop1 .ssh]# ls
-id_rsa  id_rsa.pub
-[root@hadoop1 .ssh]# cp id_rsa.pub authorized_keys_hadoop1
-[root@hadoop1 .ssh]# ls
-authorized_keys_hadoop1  id_rsa  id_rsa.pub
-~~~
 
-##### 用root账户登录192.168.29.132
-~~~javascript
-[root@hadoop2 /]# ssh-keygen -t rsa
-[root@hadoop2 /]# cd ~
-[root@hadoop2 ~]# ls -a
-[root@hadoop2 ~]# cd .ssh
-[root@hadoop2 .ssh]# ls
-id_rsa  id_rsa.pub
-[root@hadoop2 .ssh]# cp id_rsa.pub authorized_keys_hadoop2
-[root@hadoop2 .ssh]# ls
-authorized_keys_hadoop2  id_rsa  id_rsa.pub  known_hosts
-[root@hadoop2 .ssh]# scp authorized_keys_hadoop2 root@192.168.29.131:/root/.ssh
-~~~
+# cd .ssh
 
-##### 切换到192.168.29.131
+# ls
+id_rsa  id_rsa.pub
+
+# cp id_rsa.pub authorized_keys_spark1
+
+# ls
+authorized_keys_spark1  id_rsa  id_rsa.pub
+```
+
+## 用root账户登录192.168.253.108
+```
+# ssh-keygen -t rsa
+
+# cd ~
+
+# ls -a
+
+# cd .ssh
+
+# ls
+id_rsa  id_rsa.pub
+
+# cp id_rsa.pub authorized_keys_spark2
+
+# ls
+authorized_keys_spark2  id_rsa  id_rsa.pub  known_hosts
+
+# scp authorized_keys_spark2 root@192.168.253.107:/root/.ssh
+```
+
+## 切换到192.168.253.107
 ~~~javascript
 [root@hadoop1 .ssh]# cd /root/.ssh
 [root@hadoop1 .ssh]# ls

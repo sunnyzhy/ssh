@@ -137,56 +137,54 @@ authorized_keys  authorized_keys_spark2  id_rsa  id_rsa.pub  known_hosts
 # chmod 400 authorized_keys
 ```
 
-##### 测试ssh无密码登录是否生效
+# 测试ssh无密码登录是否生效
 ssh连接远程主机时，会检查主机的公钥。如果是第一次连接该主机，会显示该主机的公钥摘要，提示用户是否信任该主机：
-~~~javascript
-[root@hadoop1 .ssh]# ssh root@hadoop2
-The authenticity of host 'hadoop2 (192.168.29.132)' can't be established.
-RSA key fingerprint is ad:6e:15:9b:c9:d1:9c:09:1a:a5:91:a0:77:af:cd:e2.
+```
+# ssh root@spark2
+The authenticity of host 'spark2 (192.168.253.108)' can't be established.
+ECDSA key fingerprint is 19:19:9a:b6:f5:28:9b:69:fd:90:5b:da:fa:ef:9b:b5.
 Are you sure you want to continue connecting (yes/no)?
-~~~
-
-~~~
-当输入 yes 也就是选择接受之后，就会将该主机的公钥添加到文件 ~/.ssh/known_hosts 中。当再次连接该主机时，就不会再提示该问题了。
-~~~
-
-~~~javascript
+```
+    当输入 yes 也就是选择接受之后，就会将该主机的公钥添加到文件 ~/.ssh/known_hosts 中。当再次连接该主机时，就不会再提示该问题了。
+```
 Are you sure you want to continue connecting (yes/no)? yes
-Warning: Permanently added 'hadoop2' (RSA) to the list of known hosts.
+Warning: Permanently added 'spark2' (ECDSA) to the list of known hosts.
+Last login: Wed Jan 24 14:33:50 2018
 
-[root@hadoop1 .ssh]# ssh root@hadoop2
-Last login: Thu Oct 13 09:55:45 2016 from hadoop1
-[root@hadoop2 ~]# ls
-anaconda-ks.cfg  Documents  install.log         Music     Public     Videos
-Desktop          Downloads  install.log.syslog  Pictures  Templates
-[root@hadoop2 ~]# exit
+# ifconfig
+eno16777736: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.253.108  netmask 255.255.255.0  broadcast 192.168.253.255
+        inet6 fe80::20c:29ff:fe59:d6cf  prefixlen 64  scopeid 0x20<link>
+        ether 00:0c:29:59:d6:cf  txqueuelen 1000  (Ethernet)
+        RX packets 2532  bytes 865403 (845.1 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 2419  bytes 407063 (397.5 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+# exit
 logout
-Connection to hadoop2 closed.
-~~~
+Connection to spark2 closed.
+```
 
-#### 附加说明
-##### 登录时提示Agent admitted failure to sign using the key
-~~~javascript
-[root@hadoop1 .ssh]# ssh root@hadoop2
+# 附加说明
+## 登录时提示Agent admitted failure to sign using the key
+```
+# ssh root@spark2
 Agent admitted failure to sign using the key.
-root@hadoop2's password: 
-~~~
+root@spark2's password: 
+```
 
 解决方法：
-~~~javascript
-[root@hadoop1 .ssh]# ssh-add
+```
+# ssh-add
 Identity added: /root/.ssh/id_rsa (/root/.ssh/id_rsa)
-~~~
+```
 
-##### 修改ssh对主机的public_key的检查等级
-
-~~~javascript
+## 修改ssh对主机的public_key的检查等级
+```
 # ssh -o StrictHostKeyChecking=no|ask|yes  IP地址
-~~~
-
-~~~
+```
 参数说明：
   no，最不安全的级别，如果连接server的key在本地不存在，那么就自动添加到文件中（默认是known_hosts），并且给出一个警告。
   ask，默认的级别，如果连接和key不匹配，给出提示，并拒绝登录。
   yes，最安全的级别，如果连接与key不匹配，就拒绝连接，不会有信息提示。
-~~~

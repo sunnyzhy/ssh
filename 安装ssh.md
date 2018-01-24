@@ -79,7 +79,7 @@ id_rsa  id_rsa.pub
 # cp id_rsa.pub authorized_keys_spark2
 
 # ls
-authorized_keys_spark2  id_rsa  id_rsa.pub  known_hosts
+authorized_keys_spark2  id_rsa  id_rsa.pub
 
 # scp authorized_keys_spark2 root@192.168.253.107:/root/.ssh
 ```

@@ -127,14 +127,15 @@ authorized_keys_spark1  id_rsa                  known_hosts
 # cd /root/.ssh
 
 # ls
-authorized_keys  authorized_keys_hadoop2  id_rsa  id_rsa.pub  known_hosts
+authorized_keys  authorized_keys_spark2  id_rsa  id_rsa.pub  known_hosts
 ```
 
-##### 在各个节点中设置authorized_keys读写权限
-~~~javascript
+# 在各个节点中设置authorized_keys读写权限
+```
 # cd /root/.ssh
+
 # chmod 400 authorized_keys
-~~~
+```
 
 ##### 测试ssh无密码登录是否生效
 ssh连接远程主机时，会检查主机的公钥。如果是第一次连接该主机，会显示该主机的公钥摘要，提示用户是否信任该主机：
